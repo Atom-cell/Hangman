@@ -1,8 +1,9 @@
 import React, { useState } from 'react';
 import './App.css';
+import Gallow from './Gallow';
 
 function App() {
-	const [letters, setLetters] = useState<string[]>([
+	const letters= [
 		'a',
 		'b',
 		'c',
@@ -29,55 +30,40 @@ function App() {
 		'x',
 		'y',
 		'z',
-	]);
+	]
 	const [word, setWord] = useState<string>('hello');
-	const [usedLetters, setUsedLetters] = useState<string>('');
-	const [wrongs, setWrongs] = useState<string[]>([]);
-	const [currentLetter, setCurrentLetter] = useState<string>('');
-
+	const [usedLetters, setUsedLetters] = useState<string[]>([]);
+	const [lives, setLives] = useState<number[]>([]);
+ 
 	const checkLetter = (letter: string) => {
+		setUsedLetters([...usedLetters, letter]);
 		if (word.split('').includes(letter)) {
-			console.log('hello');
 		} else {
-			setWrongs([...wrongs, 'one']);
+			setLives([...lives, 1]);
+			if (lives.length +1 ===6) {
+				setUsedLetters([...letters]);
+			}
 		}
-		setUsedLetters((prev) => prev + letter);
+	};
+
+	const reset = () :void => {
+
 	};
 
 	return (
 		<div>
-			<div style={{borderLeft: '5px solid black', height:'13em', width:'5em', borderTop:'5px solid black', position:'relative'}}>
-				<div style={{borderRadius:'100%', border:'5px solid black', width:'3em', height:'3em', position:'absolute', left:50}}>
-				</div>
-				<div style={{borderLeft: '5px solid black', height:'4em' , position:'absolute', left:77, top:55}}>
-				</div>
-				<div style={{borderLeft: '5px solid black', height:'2em', transform:"rotate(45deg)", position:'absolute', left:63, top:57}}>
-				</div>
-				<div style={{borderLeft: '5px solid black', height:'2em' , transform:"rotate(313deg)", position:'absolute', left:89, top:55}}>
-				</div>
-				<div style={{borderLeft: '5px solid black', height:'2em', transform:"rotate(45deg)", position:'absolute', left:63, top:101}}>
-				</div>
-				<div style={{borderLeft: '5px solid black', height:'2em' , transform:"rotate(313deg)", position:'absolute', left:89, top:101}}>
-				</div>
-			</div>
-			<h1>
-				Wrongs:{' '}
-				{wrongs.map((wrong) => (
-					<span>{'|'}</span>
-				))}
-			</h1>
+			<Gallow lives={lives}/>
 			<h1 style={{ display: 'flex' }}>
 				{word.split('').map((word) => (
 					<p
 						key={word}
-						style={usedLetters.includes(word) ? {color: 'black'} : {}}
+						style={usedLetters.includes(word) ? { color: 'black' } : {}}
 						className='word'
 					>
 						{word}
 					</p>
 				))}
 			</h1>
-			<h1>{usedLetters}</h1>
 			<div style={{ display: 'flex', flexWrap: 'wrap' }}>
 				{letters.map((letter: string) => {
 					return (

@@ -2,4 +2,66 @@
   border-bottom: 1px solid red;
   margin: 7px;
   color: rgb(79, 79, 80);
+  width: 20px;
+  text-align: center;
+}
+
+.head {
+  border-radius:100%; 
+  border:5px solid black;
+  width:3em;
+  height:3em;
+  position:absolute;
+  left:50px
+}
+
+.gallow {
+  border-left: 5px solid black;
+  height: 13em;
+  width: 5em;
+  border-top: 5px solid black;
+  position: relative;
+  margin:3em
+}
+
+.body {
+  border-left: 5px solid black;
+  height:4em;
+  position:absolute;
+  left:77px;
+  top:55px
+}
+.left_arm{
+  border-left: 5px solid black;
+  height:2em;
+  transform:rotate(45deg); 
+  position:absolute;
+  left:65px;
+  top:57px
+}
+.right_arm {
+  border-left: 5px solid black;
+  height:2em;
+  transform:rotate(313deg);
+  position:absolute;
+  left:89px;
+  top:57px
+}
+
+.left_leg {
+  border-left: 5px solid black;
+  height:2em;
+  transform:rotate(45deg);
+  position:absolute;
+  left:65px;
+  top:112px
+}
+
+.right_leg {
+  border-left: 5px solid black;
+  height:2em;
+  transform:rotate(313deg);
+  position:absolute;
+  left:89px;
+  top:112px
 }
