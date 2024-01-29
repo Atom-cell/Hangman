@@ -46,6 +46,20 @@ function App() {
 
 	return (
 		<div>
+			<div style={{borderLeft: '5px solid black', height:'13em', width:'5em', borderTop:'5px solid black', position:'relative'}}>
+				<div style={{borderRadius:'100%', border:'5px solid black', width:'3em', height:'3em', position:'absolute', left:50}}>
+				</div>
+				<div style={{borderLeft: '5px solid black', height:'4em' , position:'absolute', left:77, top:55}}>
+				</div>
+				<div style={{borderLeft: '5px solid black', height:'2em', transform:"rotate(45deg)", position:'absolute', left:63, top:57}}>
+				</div>
+				<div style={{borderLeft: '5px solid black', height:'2em' , transform:"rotate(313deg)", position:'absolute', left:89, top:55}}>
+				</div>
+				<div style={{borderLeft: '5px solid black', height:'2em', transform:"rotate(45deg)", position:'absolute', left:63, top:101}}>
+				</div>
+				<div style={{borderLeft: '5px solid black', height:'2em' , transform:"rotate(313deg)", position:'absolute', left:89, top:101}}>
+				</div>
+			</div>
 			<h1>
 				Wrongs:{' '}
 				{wrongs.map((wrong) => (
