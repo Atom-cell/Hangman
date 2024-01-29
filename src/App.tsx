@@ -33,18 +33,22 @@ function App() {
 	];
 	const [word, setWord] = useState<string>('');
 	const [usedLetters, setUsedLetters] = useState<string[]>([]);
+	const [correctLetters, setCorrectLetters] = useState<string[]>([]);
 	const [lives, setLives] = useState<number[]>([]);
 
 	useEffect(() => {
 		const getData = async () => {
 			try {
-				const response = await fetch( 'https://api.api-ninjas.com/v1/randomword', {
-					headers: {
-						'X-Api-Key': process.env.REACT_APP_API_KEY || ""
-					 },
-				});
+				const response = await fetch(
+					'https://api.api-ninjas.com/v1/randomword',
+					{
+						headers: {
+							'X-Api-Key': process.env.REACT_APP_API_KEY || '',
+						},
+					}
+				);
 				const result = await response.json();
-				setWord(result.word);
+				setWord(result.word.toLowerCase());
 				console.log(result.word);
 			} catch (error) {
 				console.error(error);
@@ -56,27 +60,43 @@ function App() {
 
 	const checkLetter = (letter: string) => {
 		setUsedLetters([...usedLetters, letter]);
-		if (word.split('').includes(letter)) {
-		} else {
+
+		if (!word.split('').includes(letter)) {
 			setLives([...lives, 1]);
 			if (lives.length + 1 === 6) {
 				setUsedLetters([...letters]);
 			}
+		} else {
+			setCorrectLetters([...correctLetters, letter]);
+			if (checkWinning([...correctLetters, letter])) {
+				setUsedLetters([...letters])
+			}
 		}
+
+
+		
 	};
+
+	const checkWinning = (used: string[]) => {
+		if (used.length === word.length) {
+			return used.some(usedLetter => {
+				return word.split('').includes(usedLetter)
+			});
+		}
+
+ 	};
 
 	const reset = (): void => {
 		setUsedLetters([]);
 		setLives([]);
 	};
 
-	// TODO add keyboard support
+	// TODO: add keyboard support
 	return (
 		<div>
 			<Gallow lives={lives} />
 			<h1 style={{ display: 'flex' }}>
-				
-				{word.split('').map((word:string, index:number) => (
+				{word.split('').map((word: string, index: number) => (
 					<p
 						key={index}
 						style={usedLetters.includes(word) ? { color: 'black' } : {}}
