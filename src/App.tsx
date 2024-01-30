@@ -41,14 +41,11 @@ function App() {
 		// botijo2512@evvgo.com
 		// qwertyU1!
 		try {
-			const response = await fetch(
-				'https://api.api-ninjas.com/v1/randomword',
-				{
-					headers: {
-						'X-Api-Key': process.env.REACT_APP_API_KEY || '',
-					},
-				}
-			);
+			const response = await fetch('https://api.api-ninjas.com/v1/randomword', {
+				headers: {
+					'X-Api-Key': process.env.REACT_APP_API_KEY || '',
+				},
+			});
 			const result = await response.json();
 			setWord(result.word.toLowerCase());
 			console.log(result.word);
@@ -67,38 +64,47 @@ function App() {
 		if (!word.split('').includes(letter)) {
 			setLives([...lives, 1]);
 			if (lives.length + 1 === 6) {
-				setMessage("Game Over!");
+				setMessage('Game Over!');
 				setUsedLetters([...letters]);
 			}
 		} else {
-			setCorrectLetters([...correctLetters, letter]);
 			if (checkWinning([...correctLetters, letter])) {
-				setMessage("You win!");	
-				setUsedLetters([...letters])
+				setMessage('You win!');
+				setUsedLetters([...letters]);
 			}
+			console.log('----- ', checkFrequency(letter));
+			setCorrectLetters([
+				...correctLetters,
+				...Array(checkFrequency(letter)).fill(letter),
+			]);
 		}
-
-
-		
 	};
 
 	const checkWinning = (used: string[]) => {
+		console.log('checking  : ', used);
 		if (used.length === word.length) {
-			return used.some(usedLetter => {
-				return word.split('').includes(usedLetter)
+			return used.some((usedLetter) => {
+				return word.split('').includes(usedLetter);
 			});
 		}
+	};
 
- 	};
+	function checkFrequency(letter: string) {
+		const occurrences = word.split('').filter((char) => char === letter).length;
+
+		return occurrences;
+	}
 
 	const reset = (): void => {
 		setUsedLetters([]);
-		setMessage("");
+		setCorrectLetters([]);
+		setMessage('');
 		setLives([]);
 		getData();
 	};
 
 	// TODO: add keyboard support
+
 	return (
 		<div>
 			<Gallow lives={lives} />
