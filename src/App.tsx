@@ -1,36 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import './App.css';
+import letters from './utils/Letters';
 import Gallow from './Gallow';
 
 function App() {
-	const letters = [
-		'a',
-		'b',
-		'c',
-		'd',
-		'e',
-		'f',
-		'g',
-		'h',
-		'i',
-		'j',
-		'k',
-		'l',
-		'm',
-		'n',
-		'o',
-		'p',
-		'q',
-		'r',
-		's',
-		't',
-		'u',
-		'v',
-		'w',
-		'x',
-		'y',
-		'z',
-	];
 	const [word, setWord] = useState<string>('');
 	const [usedLetters, setUsedLetters] = useState<string[]>([]);
 	const [correctLetters, setCorrectLetters] = useState<string[]>([]);
@@ -127,12 +100,7 @@ function App() {
 					return (
 						<button
 							key={letter}
-							style={{
-								padding: '1em',
-								border: '1px solid black',
-								borderRadius: '20px',
-								cursor: 'pointer',
-							}}
+							className='mx-4 my-2 rounded-md py-4 px-6 border-solid border-2 w-11 max-w-3 text-center'
 							disabled={usedLetters.includes(letter)}
 							onClick={() => checkLetter(letter)}
 						>
