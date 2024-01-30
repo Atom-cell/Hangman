@@ -35,26 +35,29 @@ function App() {
 	const [usedLetters, setUsedLetters] = useState<string[]>([]);
 	const [correctLetters, setCorrectLetters] = useState<string[]>([]);
 	const [lives, setLives] = useState<number[]>([]);
+	const [message, setMessage] = useState<string>('');
+
+	const getData = async () => {
+		// botijo2512@evvgo.com
+		// qwertyU1!
+		try {
+			const response = await fetch(
+				'https://api.api-ninjas.com/v1/randomword',
+				{
+					headers: {
+						'X-Api-Key': process.env.REACT_APP_API_KEY || '',
+					},
+				}
+			);
+			const result = await response.json();
+			setWord(result.word.toLowerCase());
+			console.log(result.word);
+		} catch (error) {
+			console.error(error);
+		}
+	};
 
 	useEffect(() => {
-		const getData = async () => {
-			try {
-				const response = await fetch(
-					'https://api.api-ninjas.com/v1/randomword',
-					{
-						headers: {
-							'X-Api-Key': process.env.REACT_APP_API_KEY || '',
-						},
-					}
-				);
-				const result = await response.json();
-				setWord(result.word.toLowerCase());
-				console.log(result.word);
-			} catch (error) {
-				console.error(error);
-			}
-		};
-
 		getData();
 	}, []);
 
@@ -64,11 +67,13 @@ function App() {
 		if (!word.split('').includes(letter)) {
 			setLives([...lives, 1]);
 			if (lives.length + 1 === 6) {
+				setMessage("Game Over!");
 				setUsedLetters([...letters]);
 			}
 		} else {
 			setCorrectLetters([...correctLetters, letter]);
 			if (checkWinning([...correctLetters, letter])) {
+				setMessage("You win!");	
 				setUsedLetters([...letters])
 			}
 		}
@@ -88,13 +93,16 @@ function App() {
 
 	const reset = (): void => {
 		setUsedLetters([]);
+		setMessage("");
 		setLives([]);
+		getData();
 	};
 
 	// TODO: add keyboard support
 	return (
 		<div>
 			<Gallow lives={lives} />
+			<h2>{message}</h2>
 			<h1 style={{ display: 'flex' }}>
 				{word.split('').map((word: string, index: number) => (
 					<p
