@@ -107,6 +107,7 @@ function App() {
 
 	return (
 		<div>
+			<h1 className='text-3xl font-bold underline'>Hello world!</h1>
 			<Gallow lives={lives} />
 			<h2>{message}</h2>
 			<h1 style={{ display: 'flex' }}>
