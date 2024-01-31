@@ -2,7 +2,8 @@ import React, { useState, useEffect } from 'react';
 import './App.css';
 import letters from './utils/Letters';
 import Gallow from './Gallow';
-import { FaRedo } from "react-icons/fa";
+import { FaRedo } from 'react-icons/fa';
+import Loader from './Loader';
 
 function App() {
 	const [word, setWord] = useState<string>('');
@@ -10,10 +11,11 @@ function App() {
 	const [correctLetters, setCorrectLetters] = useState<string[]>([]);
 	const [lives, setLives] = useState<number[]>([]);
 	const [message, setMessage] = useState<string>('');
-
+	const [loading, setLoading] = useState<boolean>(false);
 	const getData = async () => {
 		// botijo2512@evvgo.com
 		// qwertyU1!
+		setLoading(true);
 		try {
 			const response = await fetch('https://api.api-ninjas.com/v1/randomword', {
 				headers: {
@@ -23,6 +25,7 @@ function App() {
 			const result = await response.json();
 			setWord(result.word.toLowerCase());
 			console.log(result.word);
+			setLoading(false);
 		} catch (error) {
 			console.error(error);
 		}
@@ -90,37 +93,40 @@ function App() {
 			}
 		};
 
-		// Add event listener when the component mounts
 		document.addEventListener('keydown', handleKeyPress);
 
-		// Remove event listener when the component unmounts
 		return () => {
 			document.removeEventListener('keydown', handleKeyPress);
 		};
 	}, [usedLetters, correctLetters, checkLetter]);
 
 	return (
-		<div className='font-mono w-2/4 h-full border-2 border-slate-50 flex flex-col justify-between items-center'>
+		<div className='font-mono w-2/4 h-full flex flex-col justify-center items-center'>
 			<h1 className='text-white text-4xl'>HANGMAN</h1>
 			<Gallow lives={lives} />
 			<h2>{message}</h2>
 
-			<h1 style={{ display: 'flex' }}>
-				{word.split('').map((word: string, index: number) => (
-					<p
-						key={index}
-						style={usedLetters.includes(word) ? { color: 'black' } : {}}
-						className='word'
-					>
-						{word}
-					</p>
-				))}
-			</h1>
+			{loading ? (
+				<Loader />
+			) : (
+				<h1 style={{ display: 'flex' }}>
+					{word.split('').map((word: string, index: number) => (
+						<p
+							key={index}
+							style={usedLetters.includes(word) ? { color: 'black' } : {}}
+							className='word'
+						>
+							{word}
+						</p>
+					))}
+				</h1>
+			)}
+
 			<button
 				className='bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded flex justify-center items-center'
 				onClick={() => reset()}
 			>
-				<FaRedo className='mr-2'/> RESET
+				<FaRedo className='mr-2' /> RESET
 			</button>
 			<div className='flex flex-wrap'>
 				{letters.map((letter: string) => {
