@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import './App.css';
 import letters from './utils/Letters';
 import Gallow from './Gallow';
+import { FaRedo } from "react-icons/fa";
 
 function App() {
 	const [word, setWord] = useState<string>('');
@@ -28,13 +29,13 @@ function App() {
 	};
 
 	useEffect(() => {
-		getData();
+		// getData();
 	}, []);
 
 	const checkLetter = (letter: string) => {
-		console.log('---- ',letter);
+		console.log('---- ', letter);
 		setUsedLetters([...usedLetters, letter]);
-		console.log("word----- ", word);
+		console.log('word----- ', word);
 		if (!word.split('').includes(letter)) {
 			setLives([...lives, 1]);
 			if (lives.length + 1 === 6) {
@@ -80,7 +81,10 @@ function App() {
 			const pressedKey = event.key.toLowerCase();
 			const isLetter = /^[a-zA-Z]$/.test(pressedKey);
 			if (isLetter) {
-				if (!usedLetters.includes(pressedKey) && !correctLetters.includes(pressedKey)) {
+				if (
+					!usedLetters.includes(pressedKey) &&
+					!correctLetters.includes(pressedKey)
+				) {
 					checkLetter(pressedKey);
 				}
 			}
@@ -96,10 +100,11 @@ function App() {
 	}, [usedLetters, correctLetters, checkLetter]);
 
 	return (
-		<div>
-			<h1 className='text-3xl font-bold underline'>Hello world!</h1>
+		<div className='font-mono w-2/4 h-full border-2 border-slate-50 flex flex-col justify-between items-center'>
+			<h1 className='text-white text-4xl'>HANGMAN</h1>
 			<Gallow lives={lives} />
 			<h2>{message}</h2>
+
 			<h1 style={{ display: 'flex' }}>
 				{word.split('').map((word: string, index: number) => (
 					<p
@@ -111,19 +116,29 @@ function App() {
 					</p>
 				))}
 			</h1>
-			<button onClick={() => reset()}>RESET</button>
+			<button
+				className='bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded flex justify-center items-center'
+				onClick={() => reset()}
+			>
+				<FaRedo className='mr-2'/> RESET
+			</button>
 			<div className='flex flex-wrap'>
 				{letters.map((letter: string) => {
 					return (
-						<button
-							//
-							key={letter}
-							className='flex justify-center mx-4 my-2 py-4 px-6 rounded-md border-solid border-2 w-11 max-w-3 content-center'
-							disabled={usedLetters.includes(letter)}
-							onClick={() => checkLetter(letter)}
-						>
-							<p>{letter.toUpperCase()}</p>
-						</button>
+						<div className='w-11 border-solid mx-4 my-2'>
+							<button
+								key={letter}
+								className={`${
+									usedLetters.includes(letter)
+										? 'bg-gray-800'
+										: 'bg-green-800 hover:bg-green-700'
+								} text-white py-4 px-6 rounded border-solid border-2 transition-transform duration-300 ease-in-out transform hover:translate-y-px active:translate-y-0`}
+								disabled={usedLetters.includes(letter)}
+								onClick={() => checkLetter(letter)}
+							>
+								{letter.toUpperCase()}
+							</button>
+						</div>
 					);
 				})}
 			</div>
