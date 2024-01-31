@@ -32,8 +32,9 @@ function App() {
 	}, []);
 
 	const checkLetter = (letter: string) => {
+		console.log('---- ',letter);
 		setUsedLetters([...usedLetters, letter]);
-
+		console.log("word----- ", word);
 		if (!word.split('').includes(letter)) {
 			setLives([...lives, 1]);
 			if (lives.length + 1 === 6) {
@@ -45,7 +46,6 @@ function App() {
 				setMessage('You win!');
 				setUsedLetters([...letters]);
 			}
-			console.log('----- ', checkFrequency(letter));
 			setCorrectLetters([
 				...correctLetters,
 				...Array(checkFrequency(letter)).fill(letter),
@@ -54,7 +54,6 @@ function App() {
 	};
 
 	const checkWinning = (used: string[]) => {
-		console.log('checking  : ', used);
 		if (used.length === word.length) {
 			return used.some((usedLetter) => {
 				return word.split('').includes(usedLetter);
@@ -76,7 +75,25 @@ function App() {
 		getData();
 	};
 
-	// TODO: add keyboard support
+	useEffect(() => {
+		const handleKeyPress = (event: KeyboardEvent) => {
+			const pressedKey = event.key.toLowerCase();
+			const isLetter = /^[a-zA-Z]$/.test(pressedKey);
+			if (isLetter) {
+				if (!usedLetters.includes(pressedKey) && !correctLetters.includes(pressedKey)) {
+					checkLetter(pressedKey);
+				}
+			}
+		};
+
+		// Add event listener when the component mounts
+		document.addEventListener('keydown', handleKeyPress);
+
+		// Remove event listener when the component unmounts
+		return () => {
+			document.removeEventListener('keydown', handleKeyPress);
+		};
+	}, [usedLetters, correctLetters, checkLetter]);
 
 	return (
 		<div>
@@ -95,16 +112,17 @@ function App() {
 				))}
 			</h1>
 			<button onClick={() => reset()}>RESET</button>
-			<div style={{ display: 'flex', flexWrap: 'wrap' }}>
+			<div className='flex flex-wrap'>
 				{letters.map((letter: string) => {
 					return (
 						<button
+							//
 							key={letter}
-							className='mx-4 my-2 rounded-md py-4 px-6 border-solid border-2 w-11 max-w-3 text-center'
+							className='flex justify-center mx-4 my-2 py-4 px-6 rounded-md border-solid border-2 w-11 max-w-3 content-center'
 							disabled={usedLetters.includes(letter)}
 							onClick={() => checkLetter(letter)}
 						>
-							{letter.toUpperCase()}
+							<p>{letter.toUpperCase()}</p>
 						</button>
 					);
 				})}
