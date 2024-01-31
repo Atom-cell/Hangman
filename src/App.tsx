@@ -32,13 +32,13 @@ function App() {
 	};
 
 	useEffect(() => {
-		getData();
+		// getData();
 	}, []);
 
 	const checkLetter = (letter: string) => {
-		console.log('---- ', letter);
+		// console.log('---- ', letter);
 		setUsedLetters([...usedLetters, letter]);
-		console.log('word----- ', word);
+		// console.log('word----- ', word);
 		if (!word.split('').includes(letter)) {
 			setLives([...lives, 1]);
 			if (lives.length + 1 === 6) {
@@ -109,22 +109,20 @@ function App() {
 			<Gallow lives={lives} />
 
 			<div className='mb-10 mt-7'>
-				{/* {loading ? (
-					<Loader />
-				) : ( */}
-				<h1 style={{ display: 'flex' }}>
-					{word.split('').map((word: string, index: number) => (
-						<p
-							key={index}
-							className={`border-b-4 border-white w-10 text-center mx-3 text-3xl ${
-								usedLetters.includes(word) ? 'text-white' : 'text-gray-900'
-							}`}
-						>
-							{word}
-						</p>
-					))}
-				</h1>
-				{/* )} */}
+				{!loading ? (
+					<h1 style={{ display: 'flex' }}>
+						{word.split('').map((word: string, index: number) => (
+							<p
+								key={index}
+								className={`border-b-4 border-white w-10 text-center mx-3 text-3xl ${
+									usedLetters.includes(word) ? 'text-white' : 'text-gray-900'
+								}`}
+							>
+								{word}
+							</p>
+						))}
+					</h1>
+				) : null}
 			</div>
 
 			<div className='flex flex-wrap md:w-full lg:w-2/4 px-2'>
@@ -137,7 +135,7 @@ function App() {
 									usedLetters.includes(letter)
 										? 'bg-gray-400 text-black'
 										: 'bg-gray-800 hover:bg-gray-600 text-white'
-								}  py-4 px-6 rounded border-solid border-2 transition-transform duration-300 ease-in-out transform hover:translate-y-px active:translate-y-0`}
+								}  py-4 px-6 rounded border-solid border-2 transition-transform duration-300 ease-in-out transform hover:translate-y-px `}
 								disabled={usedLetters.includes(letter)}
 								onClick={() => checkLetter(letter)}
 							>
