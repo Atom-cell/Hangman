@@ -6,14 +6,22 @@
   text-align: center;
 }
 
-.rope {
+/* .gallow {
+  border-left: 5px solid black;
+  height: 13em;
+  width: 5em;
+  border-top: 5px solid black;
+  position: relative;
+} */
+
+/* .rope {
   border-right:5px solid black;
   height:3em;
   position: absolute;
   right:0px
-}
+} */
 
-.head {
+/* .head {
   border-radius:100%; 
   border:5px solid black;
   width:3em;
@@ -21,63 +29,57 @@
   position:absolute;
   left:48px;
   top:44px
-}
+} */
 
-.gallow {
-  border-left: 5px solid black;
-  height: 13em;
-  width: 5em;
-  border-top: 5px solid black;
-  position: relative;
-  /* margin:3em */
-}
 
-.body {
+/* .body {
   border-left: 5px solid black;
   height:4em;
   position:absolute;
   left:75px;
   top:97px
-}
-.left_arm{
+} */
+
+/* .left_arm{
   border-left: 5px solid black;
   height:2em;
   transform:rotate(45deg); 
   position:absolute;
   left:65px;
   top:111px
-}
-.right_arm {
+} */
+
+/* .right_arm {
   border-left: 5px solid black;
   height:2em;
   transform:rotate(313deg);
   position:absolute;
   left:87px;
   top:111px
-}
+} */
 
-.left_leg {
+/* .left_leg {
   border-left: 5px solid black;
   height:2em;
   transform:rotate(45deg);
   position:absolute;
   left:65px;
   top:152px
-}
+} */
 
-.right_leg {
+/* .right_leg {
   border-left: 5px solid black;
   height:2em;
   transform:rotate(313deg);
   position:absolute;
   left:87px;
   top:152px
-}
+} */
 
-.base {
+/* .base {
   border-top: 5px solid black;
   width:10em;
   position: absolute;
   bottom: 0px
 
-}
+} */
