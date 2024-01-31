@@ -32,7 +32,7 @@ function App() {
 	};
 
 	useEffect(() => {
-		// getData();
+		getData();
 	}, []);
 
 	const checkLetter = (letter: string) => {
@@ -72,11 +72,13 @@ function App() {
 	}
 
 	const reset = (): void => {
-		setUsedLetters([]);
-		setCorrectLetters([]);
-		setMessage('');
-		setLives([]);
-		getData();
+		setUsedLetters([...letters]);
+		getData().then(() => {
+			setUsedLetters([]);
+			setCorrectLetters([]);
+			setMessage('');
+			setLives([]);
+		});
 	};
 
 	useEffect(() => {
@@ -107,22 +109,22 @@ function App() {
 			<Gallow lives={lives} />
 
 			<div className='mb-10 mt-7'>
-				{loading ? (
+				{/* {loading ? (
 					<Loader />
-				) : (
-					<h1 style={{ display: 'flex' }}>
-						{'word'.split('').map((word: string, index: number) => (
-							<p
-								key={index}
-								className={`border-b-4 border-white w-10 text-center mx-3 text-3xl ${
-									usedLetters.includes(word) ? 'text-white' : 'text-gray-900'
-								}`}
-							>
-								{word}
-							</p>
-						))}
-					</h1>
-				)}
+				) : ( */}
+				<h1 style={{ display: 'flex' }}>
+					{word.split('').map((word: string, index: number) => (
+						<p
+							key={index}
+							className={`border-b-4 border-white w-10 text-center mx-3 text-3xl ${
+								usedLetters.includes(word) ? 'text-white' : 'text-gray-900'
+							}`}
+						>
+							{word}
+						</p>
+					))}
+				</h1>
+				{/* )} */}
 			</div>
 
 			<div className='flex flex-wrap md:w-full lg:w-2/4 px-2'>
@@ -147,10 +149,16 @@ function App() {
 			</div>
 
 			<button
-				className='bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded flex justify-center items-center'
-				onClick={() => reset()}
+				className='bg-amber-400 hover:bg-amber-600 text-white font-bold py-2 px-4 rounded flex justify-center items-center mt-5'
+				onClick={() => !loading && reset()}
 			>
-				<FaRedo className='mr-2' /> RESET
+				{loading ? (
+					<Loader />
+				) : (
+					<>
+						<FaRedo className='mr-2' /> RESET
+					</>
+				)}
 			</button>
 		</div>
 	);
