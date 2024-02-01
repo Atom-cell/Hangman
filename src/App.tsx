@@ -38,7 +38,7 @@ function App() {
 	};
 
 	useEffect(() => {
-		// getData();
+		getData();
 	}, []);
 
 	const checkLetter = (letter: string) => {
