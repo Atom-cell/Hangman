@@ -11,7 +11,7 @@ interface Score {
 }
 
 function App() {
-	const [word, setWord] = useState<string>('hippocampus');
+	const [word, setWord] = useState<string>('');
 	const [usedLetters, setUsedLetters] = useState<string[]>([]);
 	const [correctLetters, setCorrectLetters] = useState<string[]>([]);
 	const [lives, setLives] = useState<number[]>([]);
@@ -39,7 +39,7 @@ function App() {
 	};
 
 	useEffect(() => {
-		// getData();
+		getData();
 	}, []);
 
 	const checkLetter = (letter: string) => {
