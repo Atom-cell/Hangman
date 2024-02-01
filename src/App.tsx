@@ -11,7 +11,7 @@ interface Score {
 }
 
 function App() {
-	const [word, setWord] = useState<string>('');
+	const [word, setWord] = useState<string>('hippocampus');
 	const [usedLetters, setUsedLetters] = useState<string[]>([]);
 	const [correctLetters, setCorrectLetters] = useState<string[]>([]);
 	const [lives, setLives] = useState<number[]>([]);
@@ -112,7 +112,7 @@ function App() {
 	}, [usedLetters, correctLetters, checkLetter]);
 
 	return (
-		<div className='flex flex-col items-center justify-center font-mono'>
+		<div className='flex flex-col items-center justify-center font-mono md:w-full'>
 			<h2
 				className={`text-4xl mb-5 h-8 ${
 					message === 'Game Over!'
@@ -123,19 +123,19 @@ function App() {
 				{message}
 			</h2>
 
-			<div className='flex space-x-60'>
+			<div className='flex space-x-10 sm:space-x-60'>
 				<h1 className='text-2xl'>W: {scores.W}</h1>
 				<Gallow lives={lives} />
 				<h1 className='text-2xl'>L: {scores.L}</h1>
 			</div>
 
-			<div className='mb-10 mt-7'>
+			<div className='flex items-center justify-center mb-10 mt-7'>
 				{!loading ? (
-					<h1 style={{ display: 'flex' }}>
+					<h1 className='flex flex-wrap'>
 						{word.split('').map((word: string, index: number) => (
 							<p
 								key={index}
-								className={`border-b-4 border-white w-10 text-center mx-3 text-3xl ${
+								className={`border-b-2 md:border-b-4 border-white w-5 md:w-10 text-center mx-3 text-lg md:text-3xl ${
 									usedLetters.includes(word) ? 'text-white' : 'text-gray-900'
 								}`}
 							>
@@ -146,10 +146,10 @@ function App() {
 				) : null}
 			</div>
 
-			<div className='flex flex-wrap justify-center px-2 md:w-full lg:w-2/4'>
+			<div className='flex flex-wrap ml-4 md:ml-4 md:justify-center md:px-2 lg:w-2/4'>
 				{letters.map((letter: string) => {
 					return (
-						<div className='mx-4 my-2 border-solid w-11'>
+						<div className='mx-3 border-solid md:mx-4 md:my-2 w-11'>
 							<button
 								key={letter}
 								className={`${
