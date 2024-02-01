@@ -5,6 +5,10 @@ import Gallow from './Gallow';
 import { FaRedo } from 'react-icons/fa';
 import Loader from './Loader';
 
+interface Score {
+	W:number,
+	L:number
+}
 function App() {
 	const [word, setWord] = useState<string>('');
 	const [usedLetters, setUsedLetters] = useState<string[]>([]);
@@ -12,6 +16,8 @@ function App() {
 	const [lives, setLives] = useState<number[]>([]);
 	const [message, setMessage] = useState<string>('');
 	const [loading, setLoading] = useState<boolean>(false);
+	const [scores, setScores] = useState<Score>({W:0, L:0});
+
 	const getData = async () => {
 		// botijo2512@evvgo.com
 		// qwertyU1!
@@ -43,11 +49,13 @@ function App() {
 			setLives([...lives, 1]);
 			if (lives.length + 1 === 6) {
 				setMessage('Game Over!');
+				setScores({W:scores.W, L:scores.L+1});
 				setUsedLetters([...letters]);
 			}
 		} else {
 			if (checkWinning([...correctLetters, letter])) {
 				setMessage('You win!');
+				setScores({W:scores.W+1, L:scores.L});
 				setUsedLetters([...letters]);
 			}
 			setCorrectLetters([
@@ -104,9 +112,13 @@ function App() {
 
 	return (
 		<div className='font-mono flex flex-col justify-center items-center'>
-			<h2 className='text-white text-4xl mb-5'>{message}</h2>
+			<h2 className='text-white text-4xl mb-5 h-8'>{message}</h2>
 			{/* <h1 className='text-white text-4xl'>HANGMAN</h1> */}
-			<Gallow lives={lives} />
+			<div className='flex justify-between relative space-x-60'>
+				<h1 className='text-2xl'>W:{" "}{scores.W}</h1>
+				<Gallow lives={lives} />
+				<h1 className='text-2xl'>L:{" "}{scores.L}</h1>
+			</div>
 
 			<div className='mb-10 mt-7'>
 				{!loading ? (
@@ -135,7 +147,7 @@ function App() {
 									usedLetters.includes(letter)
 										? 'bg-gray-400 text-black'
 										: 'bg-gray-800 hover:bg-gray-600 text-white'
-								}  py-4 px-6 rounded border-solid border-2 transition-transform duration-300 ease-in-out transform hover:translate-y-px `}
+								}  py-4 px-6 rounded border-solid border-2 flex justify-items-stretch transition-transform duration-300 ease-in-out transform hover:translate-y-px `}
 								disabled={usedLetters.includes(letter)}
 								onClick={() => checkLetter(letter)}
 							>
