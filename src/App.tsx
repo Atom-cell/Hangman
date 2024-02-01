@@ -6,8 +6,8 @@ import { FaRedo } from 'react-icons/fa';
 import Loader from './Loader';
 
 interface Score {
-	W:number,
-	L:number
+	W: number;
+	L: number;
 }
 function App() {
 	const [word, setWord] = useState<string>('');
@@ -16,7 +16,7 @@ function App() {
 	const [lives, setLives] = useState<number[]>([]);
 	const [message, setMessage] = useState<string>('');
 	const [loading, setLoading] = useState<boolean>(false);
-	const [scores, setScores] = useState<Score>({W:0, L:0});
+	const [scores, setScores] = useState<Score>({ W: 0, L: 0 });
 
 	const getData = async () => {
 		// botijo2512@evvgo.com
@@ -49,13 +49,13 @@ function App() {
 			setLives([...lives, 1]);
 			if (lives.length + 1 === 6) {
 				setMessage('Game Over!');
-				setScores({W:scores.W, L:scores.L+1});
+				setScores({ W: scores.W, L: scores.L + 1 });
 				setUsedLetters([...letters]);
 			}
 		} else {
 			if (checkWinning([...correctLetters, letter])) {
 				setMessage('You win!');
-				setScores({W:scores.W+1, L:scores.L});
+				setScores({ W: scores.W + 1, L: scores.L });
 				setUsedLetters([...letters]);
 			}
 			setCorrectLetters([
@@ -112,12 +112,20 @@ function App() {
 
 	return (
 		<div className='font-mono flex flex-col justify-center items-center'>
-			<h2 className='text-white text-4xl mb-5 h-8'>{message}</h2>
-			{/* <h1 className='text-white text-4xl'>HANGMAN</h1> */}
+			<h2
+				className={`text-4xl mb-5 h-8 ${
+					message === 'Game Over!'
+						? 'text-red-600 animate-pulse'
+						: 'text-green-400 animate-pulse'
+				}`}
+			>
+				{message}
+			</h2>
+			
 			<div className='flex justify-between relative space-x-60'>
-				<h1 className='text-2xl'>W:{" "}{scores.W}</h1>
+				<h1 className='text-2xl'>W: {scores.W}</h1>
 				<Gallow lives={lives} />
-				<h1 className='text-2xl'>L:{" "}{scores.L}</h1>
+				<h1 className='text-2xl'>L: {scores.L}</h1>
 			</div>
 
 			<div className='mb-10 mt-7'>
