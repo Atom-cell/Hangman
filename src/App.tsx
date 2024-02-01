@@ -4,6 +4,7 @@ import letters from './utils/Letters';
 import Gallow from './Gallow';
 import { FaRedo } from 'react-icons/fa';
 import Loader from './Loader';
+import Blobs from './Blobs';
 
 interface Score {
 	W: number;
@@ -11,7 +12,7 @@ interface Score {
 }
 
 function App() {
-	const [word, setWord] = useState<string>('');
+	const [word, setWord] = useState<string>('hippo');
 	const [usedLetters, setUsedLetters] = useState<string[]>([]);
 	const [correctLetters, setCorrectLetters] = useState<string[]>([]);
 	const [lives, setLives] = useState<number[]>([]);
@@ -39,7 +40,7 @@ function App() {
 	};
 
 	useEffect(() => {
-		getData();
+		// getData();
 	}, []);
 
 	const checkLetter = (letter: string) => {
@@ -112,7 +113,8 @@ function App() {
 	}, [usedLetters, correctLetters, checkLetter]);
 
 	return (
-		<div className='flex flex-col items-center justify-center font-mono md:w-full'>
+		<div className='flex flex-col items-center justify-center font-mono text-gray-800 md:w-full'>
+			<Blobs />
 			<h2
 				className={`text-4xl mb-5 h-8 ${
 					message === 'Game Over!'
@@ -124,19 +126,19 @@ function App() {
 			</h2>
 
 			<div className='flex space-x-10 sm:space-x-60'>
-				<h1 className='text-2xl'>W: {scores.W}</h1>
+				<h1 className='text-2xl font-bold'>W: {scores.W}</h1>
 				<Gallow lives={lives} />
-				<h1 className='text-2xl'>L: {scores.L}</h1>
+				<h1 className='text-2xl font-bold'>L: {scores.L}</h1>
 			</div>
 
-			<div className='flex items-center justify-center mb-10 mt-7'>
+			<div className='flex items-center justify-center h-10 mb-10 mt-7'>
 				{!loading ? (
 					<h1 className='flex flex-wrap'>
 						{word.split('').map((word: string, index: number) => (
 							<p
 								key={index}
-								className={`border-b-2 md:border-b-4 border-white w-5 md:w-10 text-center mx-3 text-lg md:text-3xl ${
-									usedLetters.includes(word) ? 'text-white' : 'text-gray-900'
+								className={`border-b-2 md:border-b-4 border-black w-5 md:w-10 text-center mx-3 text-lg md:text-3xl ${
+									usedLetters.includes(word) ? 'text-black' : 'text-gray-300'
 								}`}
 							>
 								{word}
