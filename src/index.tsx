@@ -6,4 +6,4 @@ import App from './App';
 const root = ReactDOM.createRoot(
 	document.getElementById('root') as HTMLElement
 );
-root.render(<div className='text-white m-0 h-screen bg-gray-900 flex flex-col justify-center items-center'><App /></div>);
+root.render(<div className='flex flex-col items-center justify-center text-white'><App /></div>);

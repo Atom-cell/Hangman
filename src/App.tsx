@@ -9,6 +9,7 @@ interface Score {
 	W: number;
 	L: number;
 }
+
 function App() {
 	const [word, setWord] = useState<string>('');
 	const [usedLetters, setUsedLetters] = useState<string[]>([]);
@@ -38,7 +39,7 @@ function App() {
 	};
 
 	useEffect(() => {
-		getData();
+		// getData();
 	}, []);
 
 	const checkLetter = (letter: string) => {
@@ -111,7 +112,7 @@ function App() {
 	}, [usedLetters, correctLetters, checkLetter]);
 
 	return (
-		<div className='font-mono flex flex-col justify-center items-center'>
+		<div className='flex flex-col items-center justify-center font-mono'>
 			<h2
 				className={`text-4xl mb-5 h-8 ${
 					message === 'Game Over!'
@@ -121,8 +122,8 @@ function App() {
 			>
 				{message}
 			</h2>
-			
-			<div className='flex justify-between relative space-x-60'>
+
+			<div className='flex space-x-60'>
 				<h1 className='text-2xl'>W: {scores.W}</h1>
 				<Gallow lives={lives} />
 				<h1 className='text-2xl'>L: {scores.L}</h1>
@@ -145,10 +146,10 @@ function App() {
 				) : null}
 			</div>
 
-			<div className='flex flex-wrap md:w-full lg:w-2/4 px-2'>
+			<div className='flex flex-wrap justify-center px-2 md:w-full lg:w-2/4'>
 				{letters.map((letter: string) => {
 					return (
-						<div className='w-11 border-solid mx-4 my-2'>
+						<div className='mx-4 my-2 border-solid w-11'>
 							<button
 								key={letter}
 								className={`${
@@ -167,7 +168,7 @@ function App() {
 			</div>
 
 			<button
-				className='bg-amber-400 hover:bg-amber-600 text-white font-bold py-2 px-4 rounded flex justify-center items-center mt-5'
+				className='flex items-center justify-center px-4 py-2 mt-5 font-bold text-white rounded hover:bg-amber-600 bg-amber-400'
 				onClick={() => !loading && reset()}
 			>
 				{loading ? (
