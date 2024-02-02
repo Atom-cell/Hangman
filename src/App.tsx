@@ -114,7 +114,7 @@ function App() {
 	return (
 		<div className='flex flex-col items-center justify-center font-mono md:w-full'>
 			<h2
-				className={`text-4xl mb-5 h-8 ${
+				className={`text-4xl mb-9 h-8 ${
 					message === 'Game Over!'
 						? 'text-red-600 animate-pulse'
 						: 'text-green-400 animate-pulse'
