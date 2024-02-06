@@ -5,6 +5,7 @@ import Gallow from './Gallow';
 import { FaRedo } from 'react-icons/fa';
 import Loader from './Loader';
 import Blobs from './Blobs';
+import DarkModeToggle from './DarkModeToggle';
 
 interface Score {
 	W: number;
@@ -12,13 +13,14 @@ interface Score {
 }
 
 function App() {
-	const [word, setWord] = useState<string>('hippo');
+	const [word, setWord] = useState<string>('');
 	const [usedLetters, setUsedLetters] = useState<string[]>([]);
 	const [correctLetters, setCorrectLetters] = useState<string[]>([]);
 	const [lives, setLives] = useState<number[]>([]);
 	const [message, setMessage] = useState<string>('');
 	const [loading, setLoading] = useState<boolean>(false);
 	const [scores, setScores] = useState<Score>({ W: 0, L: 0 });
+	const [darkMode, setDarkMode] = useState(true);
 
 	const getData = async () => {
 		// botijo2512@evvgo.com
@@ -40,7 +42,7 @@ function App() {
 	};
 
 	useEffect(() => {
-		// getData();
+		getData();
 	}, []);
 
 	const checkLetter = (letter: string) => {
@@ -112,9 +114,17 @@ function App() {
 		};
 	}, [usedLetters, correctLetters, checkLetter]);
 
+	const toggelDarkMode = () :void => {
+		setDarkMode(!darkMode);
+	};
+
 	return (
-		<div className='flex flex-col items-center justify-center font-mono text-gray-800 md:w-full'>
-			<Blobs />
+		<div
+			className={`flex sm:h-screen flex-col items-center justify-center font-mono text-gray-800 md:w-full ${
+				darkMode ? 'bg-gray-900' : 'bg-gray-300'
+			}`}
+		>
+			{!darkMode && <Blobs />}
 			<h2
 				className={`text-4xl mb-9 h-8 ${
 					message === 'Game Over!'
@@ -125,10 +135,24 @@ function App() {
 				{message}
 			</h2>
 
+			<DarkModeToggle darkMode={darkMode} toggelDarkMode={toggelDarkMode}/>
+
 			<div className='flex space-x-10 sm:space-x-60'>
-				<h1 className='text-2xl font-bold'>W: {scores.W}</h1>
-				<Gallow lives={lives} />
-				<h1 className='text-2xl font-bold'>L: {scores.L}</h1>
+				<h1
+					className={`text-2xl font-bold ${
+						darkMode ? 'text-white' : 'text-gray-900'
+					}`}
+				>
+					W: {scores.W}
+				</h1>
+				<Gallow lives={lives} darkMode={darkMode}/>
+				<h1
+					className={`text-2xl font-bold ${
+						darkMode ? 'text-white' : 'text-gray-900'
+					}`}
+				>
+					L: {scores.L}
+				</h1>
 			</div>
 
 			<div className='flex items-center justify-center h-10 mb-10 mt-7'>
@@ -137,8 +161,16 @@ function App() {
 						{word.split('').map((word: string, index: number) => (
 							<p
 								key={index}
-								className={`border-b-2 md:border-b-4 border-black w-5 md:w-10 text-center mx-3 text-lg md:text-3xl ${
-									usedLetters.includes(word) ? 'text-black' : 'text-gray-300'
+								className={`border-b-2 md:border-b-4 ${
+									darkMode ? 'border-white' : 'border-black'
+								} w-5 md:w-10 text-center mx-3 text-lg md:text-3xl ${
+									usedLetters.includes(word)
+										? darkMode
+											? 'text-white'
+											: 'text-black'
+										: darkMode
+										? 'text-gray-900'
+										: 'text-gray-300'
 								}`}
 							>
 								{word}
