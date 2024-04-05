@@ -6,6 +6,7 @@ import { FaRedo } from 'react-icons/fa';
 import Loader from './Loader';
 import Blobs from './Blobs';
 import DarkModeToggle from './DarkModeToggle';
+import ConfettiExplosion from 'react-confetti-explosion';
 
 interface Score {
 	W: number;
@@ -21,7 +22,7 @@ function App() {
 	const [loading, setLoading] = useState<boolean>(false);
 	const [scores, setScores] = useState<Score>({ W: 0, L: 0 });
 	const [darkMode, setDarkMode] = useState(true);
-
+	const [isExploding, setIsExploding] = React.useState(false);
 	const getData = async () => {
 		// botijo2512@evvgo.com
 		// qwertyU1!
@@ -59,6 +60,7 @@ function App() {
 		} else {
 			if (checkWinning([...correctLetters, letter])) {
 				setMessage('You win!');
+				setIsExploding(!isExploding);
 				setScores({ W: scores.W + 1, L: scores.L });
 				setUsedLetters([...letters]);
 			}
@@ -125,6 +127,7 @@ function App() {
 			}`}
 		>
 			{!darkMode && <Blobs />}
+			{isExploding && <ConfettiExplosion />}
 			<h2
 				className={`text-4xl mb-9 h-8 ${
 					message === 'Game Over!'
@@ -171,7 +174,7 @@ function App() {
 										: darkMode
 										? 'text-gray-900'
 										: 'text-gray-300'
-								}`}
+								} ${message === 'Game Over!' ? 'vibrate' :'' }`}
 							>
 								{word}
 							</p>
@@ -203,7 +206,12 @@ function App() {
 
 			<button
 				className='flex items-center justify-center px-4 py-2 mt-5 font-bold text-white rounded hover:bg-amber-600 bg-amber-400'
-				onClick={() => !loading && reset()}
+				onClick={() => {
+					if (!loading) {
+						reset();
+						setIsExploding(false);
+					}
+				}}
 			>
 				{loading ? (
 					<Loader />
