@@ -122,7 +122,7 @@ function App() {
 
 	return (
 		<div
-			className={`flex sm:h-screen flex-col items-center justify-center font-mono text-gray-800 md:w-full ${
+			className={`flex flex-col items-center justify-center font-mono text-gray-800 p-4 md:w-full ${
 				darkMode ? 'bg-gray-900' : 'bg-gray-300'
 			}`}
 		>
