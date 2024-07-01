@@ -34,9 +34,11 @@ function App() {
 				},
 			});
 			const result = await response.json();
-			setWord(result.word.toLowerCase());
-			console.log(result.word);
-			setLoading(false);
+			if (result) {
+				setWord(result.word[0].toLowerCase());
+				console.log(result.word[0]);
+				setLoading(false);
+			}
 		} catch (error) {
 			console.error(error);
 		}
@@ -116,7 +118,7 @@ function App() {
 		};
 	}, [usedLetters, correctLetters, checkLetter]);
 
-	const toggelDarkMode = () :void => {
+	const toggelDarkMode = (): void => {
 		setDarkMode(!darkMode);
 	};
 
@@ -138,7 +140,7 @@ function App() {
 				{message}
 			</h2>
 
-			<DarkModeToggle darkMode={darkMode} toggelDarkMode={toggelDarkMode}/>
+			<DarkModeToggle darkMode={darkMode} toggelDarkMode={toggelDarkMode} />
 
 			<div className='flex space-x-10 sm:space-x-60'>
 				<h1
@@ -148,7 +150,7 @@ function App() {
 				>
 					W: {scores.W}
 				</h1>
-				<Gallow lives={lives} darkMode={darkMode}/>
+				<Gallow lives={lives} darkMode={darkMode} />
 				<h1
 					className={`text-2xl font-bold ${
 						darkMode ? 'text-white' : 'text-gray-900'
@@ -174,7 +176,7 @@ function App() {
 										: darkMode
 										? 'text-gray-900'
 										: 'text-gray-300'
-								} ${message === 'Game Over!' ? 'vibrate' :'' }`}
+								} ${message === 'Game Over!' ? 'vibrate' : ''}`}
 							>
 								{word}
 							</p>
