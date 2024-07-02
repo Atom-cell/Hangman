@@ -124,7 +124,7 @@ function App() {
 
 	return (
 		<div
-			className={`flex flex-col items-center justify-center font-mono text-gray-800 p-4 md:w-full ${
+			className={`h-screen flex flex-col items-center justify-center font-mono text-gray-800 p-4 md:w-screen ${
 				darkMode ? 'bg-gray-900' : 'bg-gray-300'
 			}`}
 		>
@@ -188,7 +188,7 @@ function App() {
 			<div className='flex flex-wrap ml-4 md:ml-4 md:justify-center md:px-2 lg:w-2/4'>
 				{letters.map((letter: string) => {
 					return (
-						<div className='mx-3 border-solid md:mx-4 md:my-2 w-11'>
+						<div className='mx-3 border-solid md:mx-4 md:my-2 w-11' key={letter}>
 							<button
 								key={letter}
 								className={`${
